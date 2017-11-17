@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SeccionEditDlg" widgetVar="SeccionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditSeccionTitle}" closeOnEscape="true">
+
+            <h:form id="SeccionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{seccionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditSeccionLabel_idSeccion}" for="idSeccion" />
+                        <h:outputText id="idSeccion" value="#{seccionController.selected.idSeccion}" />
+
+                        <p:outputLabel value="#{myBundle.EditSeccionLabel_nombreSeccion}" for="nombreSeccion" />
+                        <p:inputText id="nombreSeccion" value="#{seccionController.selected.nombreSeccion}" title="#{myBundle.EditSeccionTitle_nombreSeccion}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{myBundle.EditSeccionLabel_idGrado}" for="idGrado" />
+                        <p:selectOneMenu id="idGrado" value="#{seccionController.selected.idGrado}"  converter="gradoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{gradoController.items}"
+                                           var="idGradoItem"
+                                           itemValue="#{idGradoItem}"
+                                           itemLabel="#{idGradoItem.idGrado.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{seccionController.save}" value="#{myBundle.Save}" update="display,:SeccionListForm:datalist,:SeccionListForm:SeccionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SeccionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('SeccionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

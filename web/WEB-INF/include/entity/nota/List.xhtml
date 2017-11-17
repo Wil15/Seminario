@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="NotaListForm">
+
+        <p:panel header="#{myBundle.ListNotaTitle}">
+            <p:contextMenu id="NotaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('NotaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('NotaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('NotaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('NotaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.NotaMenuItem_idBimestre}" icon="ui-icon-search"  actionListener="#{notaController.prepareIdBimestre}" update=":BimestreViewForm" oncomplete="PF('BimestreViewDialog').show()" disabled="#{empty notaController.selected.idBimestre}"/>  
+                <p:menuitem value="#{myBundle.NotaMenuItem_idCurso}" icon="ui-icon-search"  actionListener="#{notaController.prepareIdCurso}" update=":CursoViewForm" oncomplete="PF('CursoViewDialog').show()" disabled="#{empty notaController.selected.idCurso}"/>  
+                <p:menuitem value="#{myBundle.NotaMenuItem_idEstudiante}" icon="ui-icon-search"  actionListener="#{notaController.prepareIdEstudiante}" update=":EstudianteViewForm" oncomplete="PF('EstudianteViewDialog').show()" disabled="#{empty notaController.selected.idEstudiante}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{notaController.items}"
+                         lazy="false"
+                         rowKey="#{item.idNota}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{notaController.selected}"
+                         filteredValue="#{notaController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{notaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idNota}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:NotaDataTableContextMenu" listener="#{notaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:NotaDataTableContextMenu" listener="#{notaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{notaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('NotaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idNota}" filterBy="#{item.idNota}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListNotaTitle_idNota}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idNota}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nota}" filterBy="#{item.nota}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListNotaTitle_nota}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nota}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idBimestre.idBimestre}" filterBy="#{item.idBimestre.idBimestre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListNotaTitle_idBimestre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idBimestre.idBimestre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idCurso.idCurso}" filterBy="#{item.idCurso.idCurso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListNotaTitle_idCurso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idCurso.idCurso}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idEstudiante.idEstudiante}" filterBy="#{item.idEstudiante.idEstudiante}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListNotaTitle_idEstudiante}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEstudiante.idEstudiante}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{notaController.prepareCreate}" update=":NotaCreateForm" oncomplete="PF('NotaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":NotaViewForm" oncomplete="PF('NotaViewDialog').show()" disabled="#{empty notaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":NotaEditForm" oncomplete="PF('NotaEditDialog').show()" disabled="#{empty notaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{notaController.delete}" update=":growl,datalist" disabled="#{empty notaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

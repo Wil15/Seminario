@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PersonaListForm">
+
+        <p:panel header="#{myBundle.ListPersonaTitle}">
+            <p:contextMenu id="PersonaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('PersonaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('PersonaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('PersonaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('PersonaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.PersonaMenuItem_cursoList}" icon="ui-icon-search"  action="#{personaController.navigateCursoList}" disabled="#{personaController.isCursoListEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.PersonaMenuItem_idRol}" icon="ui-icon-search"  actionListener="#{personaController.prepareIdRol}" update=":RolViewForm" oncomplete="PF('RolViewDialog').show()" disabled="#{empty personaController.selected.idRol}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{personaController.items}"
+                         lazy="false"
+                         rowKey="#{item.idPersona}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{personaController.selected}"
+                         filteredValue="#{personaController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{personaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idPersona}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PersonaDataTableContextMenu" listener="#{personaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PersonaDataTableContextMenu" listener="#{personaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{personaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PersonaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idPersona}" filterBy="#{item.idPersona}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPersonaTitle_idPersona}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idPersona}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.primerNombre}" filterBy="#{item.primerNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPersonaTitle_primerNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.primerNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.segundoNombre}" filterBy="#{item.segundoNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPersonaTitle_segundoNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.segundoNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tercerNombre}" filterBy="#{item.tercerNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPersonaTitle_tercerNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tercerNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.primerApellido}" filterBy="#{item.primerApellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPersonaTitle_primerApellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.primerApellido}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.segundoApellido}" filterBy="#{item.segundoApellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPersonaTitle_segundoApellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.segundoApellido}"/>
+                </p:column>
+
+                <ui:remove>
+                    <p:column sortBy="#{item.profesion}" filterBy="#{item.profesion}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListPersonaTitle_profesion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.profesion}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.telefono}" filterBy="#{item.telefono}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListPersonaTitle_telefono}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.telefono}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.email}" filterBy="#{item.email}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListPersonaTitle_email}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.fechaNacimiento}" filterBy="#{item.fechaNacimiento}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListPersonaTitle_fechaNacimiento}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListPersonaTitle_direccion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.direccion}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListPersonaTitle_estado}"/>
+                        </f:facet>
+                        <h:selectBooleanCheckbox id="estado" value="#{item.estado}" title="#{myBundle.EditPersonaTitle_estado}"  disabled="true"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListPersonaTitle_usuario}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usuario}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.password}" filterBy="#{item.password}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListPersonaTitle_password}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.password}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.idRol.idRol}" filterBy="#{item.idRol.idRol}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListPersonaTitle_idRol}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idRol.idRol}"/>
+                    </p:column>
+                </ui:remove>
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{personaController.prepareCreate}" update=":PersonaCreateForm" oncomplete="PF('PersonaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":PersonaViewForm" oncomplete="PF('PersonaViewDialog').show()" disabled="#{empty personaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PersonaEditForm" oncomplete="PF('PersonaEditDialog').show()" disabled="#{empty personaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{personaController.delete}" update=":growl,datalist" disabled="#{empty personaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

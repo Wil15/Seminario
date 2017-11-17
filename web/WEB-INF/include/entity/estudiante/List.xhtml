@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EstudianteListForm">
+
+        <p:panel header="#{myBundle.ListEstudianteTitle}">
+            <p:contextMenu id="EstudianteDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EstudianteListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EstudianteListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EstudianteListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EstudianteListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.EstudianteMenuItem_idSeccion}" icon="ui-icon-search"  actionListener="#{estudianteController.prepareIdSeccion}" update=":SeccionViewForm" oncomplete="PF('SeccionViewDialog').show()" disabled="#{empty estudianteController.selected.idSeccion}"/>  
+                <p:menuitem value="#{myBundle.EstudianteMenuItem_notaList}" icon="ui-icon-search"  action="#{estudianteController.navigateNotaList}" disabled="#{estudianteController.isNotaListEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{estudianteController.items}"
+                         lazy="false"
+                         rowKey="#{item.idEstudiante}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{estudianteController.selected}"
+                         filteredValue="#{estudianteController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{estudianteController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idEstudiante}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EstudianteDataTableContextMenu" listener="#{estudianteController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EstudianteDataTableContextMenu" listener="#{estudianteController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{estudianteController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EstudianteListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idEstudiante}" filterBy="#{item.idEstudiante}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEstudianteTitle_idEstudiante}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEstudiante}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.primerNombre}" filterBy="#{item.primerNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEstudianteTitle_primerNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.primerNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.segundoNombre}" filterBy="#{item.segundoNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEstudianteTitle_segundoNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.segundoNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tercerNombre}" filterBy="#{item.tercerNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEstudianteTitle_tercerNombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tercerNombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.primerApellido}" filterBy="#{item.primerApellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEstudianteTitle_primerApellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.primerApellido}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.segundoApellido}" filterBy="#{item.segundoApellido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEstudianteTitle_segundoApellido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.segundoApellido}"/>
+                </p:column>
+
+                <ui:remove>
+                    <p:column sortBy="#{item.telefono}" filterBy="#{item.telefono}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListEstudianteTitle_telefono}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.telefono}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListEstudianteTitle_direccion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.direccion}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.email}" filterBy="#{item.email}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListEstudianteTitle_email}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.fechaNacimiento}" filterBy="#{item.fechaNacimiento}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListEstudianteTitle_fechaNacimiento}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListEstudianteTitle_estado}"/>
+                        </f:facet>
+                        <h:selectBooleanCheckbox id="estado" value="#{item.estado}" title="#{myBundle.EditEstudianteTitle_estado}"  disabled="true"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.idSeccion.idSeccion}" filterBy="#{item.idSeccion.idSeccion}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListEstudianteTitle_idSeccion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idSeccion.idSeccion}"/>
+                    </p:column>
+                </ui:remove>
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{estudianteController.prepareCreate}" update=":EstudianteCreateForm" oncomplete="PF('EstudianteCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EstudianteViewForm" oncomplete="PF('EstudianteViewDialog').show()" disabled="#{empty estudianteController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EstudianteEditForm" oncomplete="PF('EstudianteEditDialog').show()" disabled="#{empty estudianteController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{estudianteController.delete}" update=":growl,datalist" disabled="#{empty estudianteController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SeccionCreateDlg" widgetVar="SeccionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateSeccionTitle}" closeOnEscape="true">
+
+            <h:form id="SeccionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{seccionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateSeccionLabel_nombreSeccion}" for="nombreSeccion" />
+                        <p:inputText id="nombreSeccion" value="#{seccionController.selected.nombreSeccion}" title="#{myBundle.CreateSeccionTitle_nombreSeccion}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{myBundle.CreateSeccionLabel_idGrado}" for="idGrado" />
+                        <p:selectOneMenu id="idGrado" value="#{seccionController.selected.idGrado}"  converter="gradoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{gradoController.items}"
+                                           var="idGradoItem"
+                                           itemValue="#{idGradoItem}"
+                                           itemLabel="#{idGradoItem.idGrado.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{seccionController.saveNew}" value="#{myBundle.Save}" update="display,:SeccionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SeccionCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('SeccionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CursoViewDlg" widgetVar="CursoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCursoTitle}" closeOnEscape="true">
+
+            <h:form id="CursoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{cursoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCursoLabel_idCurso}"/>
+                        <h:outputText value="#{cursoController.selected.idCurso}" title="#{myBundle.ViewCursoTitle_idCurso}"/>
+
+                        <h:outputText value="#{myBundle.ViewCursoLabel_nombreCurso}"/>
+                        <h:outputText value="#{cursoController.selected.nombreCurso}" title="#{myBundle.ViewCursoTitle_nombreCurso}"/>
+
+                        <h:outputText value="#{myBundle.ViewCursoLabel_estado}"/>
+                        <p:selectBooleanCheckbox id="estado" value="#{cursoController.selected.estado}" title="#{myBundle.EditCursoTitle_estado}" />
+
+                        <h:outputText value="#{myBundle.ViewCursoLabel_idGrado}"/>
+                        <h:outputText value="#{cursoController.selected.idGrado.idGrado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CursoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

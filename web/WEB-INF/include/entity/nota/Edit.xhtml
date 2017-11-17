@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="NotaEditDlg" widgetVar="NotaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditNotaTitle}" closeOnEscape="true">
+
+            <h:form id="NotaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{notaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditNotaLabel_idNota}" for="idNota" />
+                        <h:outputText id="idNota" value="#{notaController.selected.idNota}" />
+
+                        <p:outputLabel value="#{myBundle.EditNotaLabel_nota}" for="nota" />
+                        <p:inputText id="nota" value="#{notaController.selected.nota}" title="#{myBundle.EditNotaTitle_nota}"/>
+
+                        <p:outputLabel value="#{myBundle.EditNotaLabel_idBimestre}" for="idBimestre" />
+                        <p:selectOneMenu id="idBimestre" value="#{notaController.selected.idBimestre}"  converter="bimestreConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bimestreController.items}"
+                                           var="idBimestreItem"
+                                           itemValue="#{idBimestreItem}"
+                                           itemLabel="#{idBimestreItem.idBimestre.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditNotaLabel_idCurso}" for="idCurso" />
+                        <p:selectOneMenu id="idCurso" value="#{notaController.selected.idCurso}"  converter="cursoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cursoController.items}"
+                                           var="idCursoItem"
+                                           itemValue="#{idCursoItem}"
+                                           itemLabel="#{idCursoItem.idCurso.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditNotaLabel_idEstudiante}" for="idEstudiante" />
+                        <p:selectOneMenu id="idEstudiante" value="#{notaController.selected.idEstudiante}"  converter="estudianteConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{estudianteController.items}"
+                                           var="idEstudianteItem"
+                                           itemValue="#{idEstudianteItem}"
+                                           itemLabel="#{idEstudianteItem.idEstudiante.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{notaController.save}" value="#{myBundle.Save}" update="display,:NotaListForm:datalist,:NotaListForm:NotaDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('NotaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('NotaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

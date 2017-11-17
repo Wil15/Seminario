@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CursoEditDlg" widgetVar="CursoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCursoTitle}" closeOnEscape="true">
+
+            <h:form id="CursoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cursoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCursoLabel_idCurso}" for="idCurso" />
+                        <h:outputText id="idCurso" value="#{cursoController.selected.idCurso}" />
+
+                        <p:outputLabel value="#{myBundle.EditCursoLabel_nombreCurso}" for="nombreCurso" />
+                        <p:inputText id="nombreCurso" value="#{cursoController.selected.nombreCurso}" title="#{myBundle.EditCursoTitle_nombreCurso}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.EditCursoLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{cursoController.selected.estado}" />
+
+                        <p:outputLabel value="#{myBundle.EditCursoLabel_idGrado}" for="idGrado" />
+                        <p:selectOneMenu id="idGrado" value="#{cursoController.selected.idGrado}"  converter="gradoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{gradoController.items}"
+                                           var="idGradoItem"
+                                           itemValue="#{idGradoItem}"
+                                           itemLabel="#{idGradoItem.idGrado.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cursoController.save}" value="#{myBundle.Save}" update="display,:CursoListForm:datalist,:CursoListForm:CursoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CursoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CursoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

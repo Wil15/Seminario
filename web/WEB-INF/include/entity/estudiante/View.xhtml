@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstudianteViewDlg" widgetVar="EstudianteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEstudianteTitle}" closeOnEscape="true">
+
+            <h:form id="EstudianteViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{estudianteController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_idEstudiante}"/>
+                        <h:outputText value="#{estudianteController.selected.idEstudiante}" title="#{myBundle.ViewEstudianteTitle_idEstudiante}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_primerNombre}"/>
+                        <h:outputText value="#{estudianteController.selected.primerNombre}" title="#{myBundle.ViewEstudianteTitle_primerNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_segundoNombre}"/>
+                        <h:outputText value="#{estudianteController.selected.segundoNombre}" title="#{myBundle.ViewEstudianteTitle_segundoNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_tercerNombre}"/>
+                        <h:outputText value="#{estudianteController.selected.tercerNombre}" title="#{myBundle.ViewEstudianteTitle_tercerNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_primerApellido}"/>
+                        <h:outputText value="#{estudianteController.selected.primerApellido}" title="#{myBundle.ViewEstudianteTitle_primerApellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_segundoApellido}"/>
+                        <h:outputText value="#{estudianteController.selected.segundoApellido}" title="#{myBundle.ViewEstudianteTitle_segundoApellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_telefono}"/>
+                        <h:outputText value="#{estudianteController.selected.telefono}" title="#{myBundle.ViewEstudianteTitle_telefono}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_direccion}"/>
+                        <h:outputText value="#{estudianteController.selected.direccion}" title="#{myBundle.ViewEstudianteTitle_direccion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_email}"/>
+                        <h:outputText value="#{estudianteController.selected.email}" title="#{myBundle.ViewEstudianteTitle_email}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_fechaNacimiento}"/>
+                        <h:outputText value="#{estudianteController.selected.fechaNacimiento}" title="#{myBundle.ViewEstudianteTitle_fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_estado}"/>
+                        <p:selectBooleanCheckbox id="estado" value="#{estudianteController.selected.estado}" title="#{myBundle.EditEstudianteTitle_estado}" />
+
+                        <h:outputText value="#{myBundle.ViewEstudianteLabel_idSeccion}"/>
+                        <h:outputText value="#{estudianteController.selected.idSeccion.idSeccion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EstudianteViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="BimestreCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateBimestreTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:BimestreListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="BimestreCreateForm">
+
+                <h:panelGroup id="display" rendered="#{bimestreController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateBimestreLabel_nombreBimestre}" for="nombreBimestre" />
+                            <p:inputText id="nombreBimestre" value="#{bimestreController.selected.nombreBimestre}" title="#{myBundle.CreateBimestreTitle_nombreBimestre}" size="45" maxlength="45"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateBimestreLabel_cicloEscolar}" for="cicloEscolar" />
+                            <p:inputText id="cicloEscolar" value="#{bimestreController.selected.cicloEscolar}" title="#{myBundle.CreateBimestreTitle_cicloEscolar}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{bimestreController.saveNew}" value="#{myBundle.Save}" update="display,:BimestreListPage:BimestreListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:BimestreListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

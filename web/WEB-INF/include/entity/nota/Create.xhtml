@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NotaCreateDlg" widgetVar="NotaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateNotaTitle}" closeOnEscape="true">
+
+            <h:form id="NotaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{notaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateNotaLabel_nota}" for="nota" />
+                        <p:inputText id="nota" value="#{notaController.selected.nota}" title="#{myBundle.CreateNotaTitle_nota}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateNotaLabel_idBimestre}" for="idBimestre" />
+                        <p:selectOneMenu id="idBimestre" value="#{notaController.selected.idBimestre}"  converter="bimestreConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bimestreController.items}"
+                                           var="idBimestreItem"
+                                           itemValue="#{idBimestreItem}"
+                                           itemLabel="#{idBimestreItem.idBimestre.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateNotaLabel_idCurso}" for="idCurso" />
+                        <p:selectOneMenu id="idCurso" value="#{notaController.selected.idCurso}"  converter="cursoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cursoController.items}"
+                                           var="idCursoItem"
+                                           itemValue="#{idCursoItem}"
+                                           itemLabel="#{idCursoItem.idCurso.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateNotaLabel_idEstudiante}" for="idEstudiante" />
+                        <p:selectOneMenu id="idEstudiante" value="#{notaController.selected.idEstudiante}"  converter="estudianteConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{estudianteController.items}"
+                                           var="idEstudianteItem"
+                                           itemValue="#{idEstudianteItem}"
+                                           itemLabel="#{idEstudianteItem.idEstudiante.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{notaController.saveNew}" value="#{myBundle.Save}" update="display,:NotaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('NotaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('NotaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

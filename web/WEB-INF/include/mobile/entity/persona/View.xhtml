@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PersonaViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewPersonaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:PersonaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PersonaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{personaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_idPersona}"/>
+                            <h:outputText value="#{personaController.selected.idPersona}" title="#{myBundle.ViewPersonaTitle_idPersona}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_primerNombre}"/>
+                            <h:outputText value="#{personaController.selected.primerNombre}" title="#{myBundle.ViewPersonaTitle_primerNombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_segundoNombre}"/>
+                            <h:outputText value="#{personaController.selected.segundoNombre}" title="#{myBundle.ViewPersonaTitle_segundoNombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_tercerNombre}"/>
+                            <h:outputText value="#{personaController.selected.tercerNombre}" title="#{myBundle.ViewPersonaTitle_tercerNombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_primerApellido}"/>
+                            <h:outputText value="#{personaController.selected.primerApellido}" title="#{myBundle.ViewPersonaTitle_primerApellido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_segundoApellido}"/>
+                            <h:outputText value="#{personaController.selected.segundoApellido}" title="#{myBundle.ViewPersonaTitle_segundoApellido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_profesion}"/>
+                            <h:outputText value="#{personaController.selected.profesion}" title="#{myBundle.ViewPersonaTitle_profesion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_telefono}"/>
+                            <h:outputText value="#{personaController.selected.telefono}" title="#{myBundle.ViewPersonaTitle_telefono}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_email}"/>
+                            <h:outputText value="#{personaController.selected.email}" title="#{myBundle.ViewPersonaTitle_email}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_fechaNacimiento}"/>
+                            <h:outputText value="#{personaController.selected.fechaNacimiento}" title="#{myBundle.ViewPersonaTitle_fechaNacimiento}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_direccion}"/>
+                            <h:outputText value="#{personaController.selected.direccion}" title="#{myBundle.ViewPersonaTitle_direccion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_estado}"/>
+                            <h:selectBooleanCheckbox id="estado" value="#{personaController.selected.estado}" title="#{myBundle.EditPersonaTitle_estado}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_usuario}"/>
+                            <h:outputText value="#{personaController.selected.usuario}" title="#{myBundle.ViewPersonaTitle_usuario}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_password}"/>
+                            <h:outputText value="#{personaController.selected.password}" title="#{myBundle.ViewPersonaTitle_password}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_cursoList}"/>
+                            <h:selectManyMenu converter="cursoConverter">
+                                <f:selectItems value="#{personaController.selected.cursoList}"
+                                               var="cursoListItem"
+                                               itemValue="#{cursoListItem}"
+                                               itemLabel="#{cursoListItem.idCurso.toString()}"
+                                               />
+
+                            </h:selectManyMenu>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonaLabel_idRol}"/>
+                            <h:outputText value="#{personaController.selected.idRol.idRol}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

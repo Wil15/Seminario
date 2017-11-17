@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="SeccionViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewSeccionTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:SeccionListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="SeccionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{seccionController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSeccionLabel_idSeccion}"/>
+                            <h:outputText value="#{seccionController.selected.idSeccion}" title="#{myBundle.ViewSeccionTitle_idSeccion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSeccionLabel_nombreSeccion}"/>
+                            <h:outputText value="#{seccionController.selected.nombreSeccion}" title="#{myBundle.ViewSeccionTitle_nombreSeccion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSeccionLabel_idGrado}"/>
+                            <h:outputText value="#{seccionController.selected.idGrado.idGrado}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

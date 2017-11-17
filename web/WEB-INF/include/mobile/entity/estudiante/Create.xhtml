@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EstudianteCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateEstudianteTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EstudianteListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EstudianteCreateForm">
+
+                <h:panelGroup id="display" rendered="#{estudianteController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_primerNombre}" for="primerNombre" />
+                            <p:inputText id="primerNombre" value="#{estudianteController.selected.primerNombre}" title="#{myBundle.CreateEstudianteTitle_primerNombre}" size="15" maxlength="15"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_segundoNombre}" for="segundoNombre" />
+                            <p:inputText id="segundoNombre" value="#{estudianteController.selected.segundoNombre}" title="#{myBundle.CreateEstudianteTitle_segundoNombre}" size="15" maxlength="15"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_tercerNombre}" for="tercerNombre" />
+                            <p:inputText id="tercerNombre" value="#{estudianteController.selected.tercerNombre}" title="#{myBundle.CreateEstudianteTitle_tercerNombre}" size="15" maxlength="15"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_primerApellido}" for="primerApellido" />
+                            <p:inputText id="primerApellido" value="#{estudianteController.selected.primerApellido}" title="#{myBundle.CreateEstudianteTitle_primerApellido}" size="15" maxlength="15"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_segundoApellido}" for="segundoApellido" />
+                            <p:inputText id="segundoApellido" value="#{estudianteController.selected.segundoApellido}" title="#{myBundle.CreateEstudianteTitle_segundoApellido}" size="15" maxlength="15"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_telefono}" for="telefono" />
+                            <p:inputText id="telefono" value="#{estudianteController.selected.telefono}" title="#{myBundle.CreateEstudianteTitle_telefono}" size="20" maxlength="20"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_direccion}" for="direccion" />
+                            <p:inputText id="direccion" value="#{estudianteController.selected.direccion}" title="#{myBundle.CreateEstudianteTitle_direccion}" size="50" maxlength="50"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_email}" for="email" />
+                            <p:inputText id="email" value="#{estudianteController.selected.email}" title="#{myBundle.CreateEstudianteTitle_email}" size="30" maxlength="30"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_fechaNacimiento}" for="fechaNacimiento" />
+                            <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{estudianteController.selected.fechaNacimiento}" title="#{myBundle.CreateEstudianteTitle_fechaNacimiento}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_estado}" for="estado" />
+                            <p:selectBooleanCheckbox id="estado" value="#{estudianteController.selected.estado}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEstudianteLabel_idSeccion}" for="idSeccion" />
+                            <p:selectOneMenu id="idSeccion" value="#{estudianteController.selected.idSeccion}"  converter="seccionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{seccionController.items}"
+                                               var="idSeccionItem"
+                                               itemValue="#{idSeccionItem}"
+                                               itemLabel="#{idSeccionItem.idSeccion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{estudianteController.saveNew}" value="#{myBundle.Save}" update="display,:EstudianteListPage:EstudianteListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:EstudianteListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

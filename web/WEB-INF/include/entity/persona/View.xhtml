@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PersonaViewDlg" widgetVar="PersonaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPersonaTitle}" closeOnEscape="true">
+
+            <h:form id="PersonaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{personaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_idPersona}"/>
+                        <h:outputText value="#{personaController.selected.idPersona}" title="#{myBundle.ViewPersonaTitle_idPersona}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_primerNombre}"/>
+                        <h:outputText value="#{personaController.selected.primerNombre}" title="#{myBundle.ViewPersonaTitle_primerNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_segundoNombre}"/>
+                        <h:outputText value="#{personaController.selected.segundoNombre}" title="#{myBundle.ViewPersonaTitle_segundoNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_tercerNombre}"/>
+                        <h:outputText value="#{personaController.selected.tercerNombre}" title="#{myBundle.ViewPersonaTitle_tercerNombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_primerApellido}"/>
+                        <h:outputText value="#{personaController.selected.primerApellido}" title="#{myBundle.ViewPersonaTitle_primerApellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_segundoApellido}"/>
+                        <h:outputText value="#{personaController.selected.segundoApellido}" title="#{myBundle.ViewPersonaTitle_segundoApellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_profesion}"/>
+                        <h:outputText value="#{personaController.selected.profesion}" title="#{myBundle.ViewPersonaTitle_profesion}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_telefono}"/>
+                        <h:outputText value="#{personaController.selected.telefono}" title="#{myBundle.ViewPersonaTitle_telefono}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_email}"/>
+                        <h:outputText value="#{personaController.selected.email}" title="#{myBundle.ViewPersonaTitle_email}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_fechaNacimiento}"/>
+                        <h:outputText value="#{personaController.selected.fechaNacimiento}" title="#{myBundle.ViewPersonaTitle_fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_direccion}"/>
+                        <h:outputText value="#{personaController.selected.direccion}" title="#{myBundle.ViewPersonaTitle_direccion}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_estado}"/>
+                        <p:selectBooleanCheckbox id="estado" value="#{personaController.selected.estado}" title="#{myBundle.EditPersonaTitle_estado}" />
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_usuario}"/>
+                        <h:outputText value="#{personaController.selected.usuario}" title="#{myBundle.ViewPersonaTitle_usuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_password}"/>
+                        <h:outputText value="#{personaController.selected.password}" title="#{myBundle.ViewPersonaTitle_password}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_cursoList}"/>
+                        <p:selectManyMenu converter="cursoConverter">
+                            <f:attribute name="collectionType" value="java.util.ArrayList"/>
+                            <f:selectItems value="#{personaController.selected.cursoList}"
+                                           var="cursoListItem"
+                                           itemValue="#{cursoListItem}"
+                                           itemLabel="#{cursoListItem.idCurso.toString()}"
+                                           />
+
+                        </p:selectManyMenu>
+
+                        <h:outputText value="#{myBundle.ViewPersonaLabel_idRol}"/>
+                        <h:outputText value="#{personaController.selected.idRol.idRol}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('PersonaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

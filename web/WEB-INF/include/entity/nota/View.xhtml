@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NotaViewDlg" widgetVar="NotaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewNotaTitle}" closeOnEscape="true">
+
+            <h:form id="NotaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{notaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewNotaLabel_idNota}"/>
+                        <h:outputText value="#{notaController.selected.idNota}" title="#{myBundle.ViewNotaTitle_idNota}"/>
+
+                        <h:outputText value="#{myBundle.ViewNotaLabel_nota}"/>
+                        <h:outputText value="#{notaController.selected.nota}" title="#{myBundle.ViewNotaTitle_nota}"/>
+
+                        <h:outputText value="#{myBundle.ViewNotaLabel_idBimestre}"/>
+                        <h:outputText value="#{notaController.selected.idBimestre.idBimestre}"/>
+
+                        <h:outputText value="#{myBundle.ViewNotaLabel_idCurso}"/>
+                        <h:outputText value="#{notaController.selected.idCurso.idCurso}"/>
+
+                        <h:outputText value="#{myBundle.ViewNotaLabel_idEstudiante}"/>
+                        <h:outputText value="#{notaController.selected.idEstudiante.idEstudiante}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('NotaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
